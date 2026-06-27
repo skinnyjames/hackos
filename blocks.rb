@@ -1,0 +1,8 @@
+require_relative "./blocks/camera"
+require_relative "./blocks/slider"
+require_relative "./blocks/variable"
+require_relative "./blocks/panel"
+require_relative "./blocks/text"
+require_relative "./blocks/keyboard"
+require_relative "./blocks/input"
+require_relative "./blocks/messages_text"

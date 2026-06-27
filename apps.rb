@@ -1,0 +1,6 @@
+require_relative "./apps/phone"
+require_relative "./apps/status"
+require_relative "./apps/launcher"
+require_relative "./apps/lockscreen"
+require_relative "./apps/camera"
+require_relative "./apps/messages"
