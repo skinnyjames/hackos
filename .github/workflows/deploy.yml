@@ -1,0 +1,51 @@
+name: deploy
+on:
+  push:
+    tags:
+    - '*'
+jobs:
+  linux-arm64:
+    runs-on: ubuntu-22.04-arm
+    container:
+      image: alpine:latest
+    steps:
+      - name: deps
+        run: apk add git basu-dev libc++-dev llvm-libunwind-dev make cmake automake libtool ruby wget build-base clang alsa-lib-dev eudev-dev jack-dev libdecor-dev libsamplerate-dev libusb-dev libx11-dev libxcursor-dev libxext-dev libxi-dev libxkbcommon-dev libxrandr-dev libxrender-dev libxscrnsaver-dev libxtst-dev pipewire-dev pulseaudio-dev samurai wayland-dev wayland-protocols mesa-dev
+      - uses: laverdet/alpine-arm64@v1
+      - uses: actions/checkout@v5
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: 'skinnyjames/hokusai-pocket'
+          version: 'tags/0.10.0'
+          file: 'hokusai-pocket-arm64-linux.tar.gz'
+          target: 'hokusai-pocket.tar.gz'
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: unpack hp
+        run: tar -xvf hokusai-pocket.tar.gz --strip-components 1
+      - name: gem install rake
+        run: gem install rake
+      - name: build pocket
+        run: chmod 755 hokusai-pocket && ./hokusai-pocket cli,raylib,tlsuv,nfd,hokusai,flite:http=true:remote=true:arm64=true:platform=sdl:opengl=es:voice=true mruby:gem_config=./gems
+        env:
+          LDFLAGS: "-lbasu"
+          LIBS: "-lbasu"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hokusai-pocket-pinephone
+          path: bin/hokusai-pocket
+          overwrite: true
+  release:
+    needs: [linux-arm64]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: hokusai-pocket*
+    - name: zip artifacts
+      run: |
+        tar -czvf hokusai-pocket-pinephone.tar.gz hokusai-pocket-pinephone
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "hokusai-pocket*"
