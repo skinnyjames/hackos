@@ -68,17 +68,18 @@ APP_ICONS = {
 
 CHARSET = "–—‘’“”…\r\n\t\s0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%%^&*()°,.?/\"\\[]-_=+|~`{}<>;:'"
 
+Hokusai.tmpdir = "downloads"
+
 Hokusai::Backend.run(HackOS::App) do |config|
   config.title = "hackos"
-  config.fps = 60
+  config.fps = 120
   config.width = 720
   config.height = 1400
   config.config_flags = HP_FLAG_WINDOW_RESIZABLE
-  config.audio = false
+  config.audio = true
   config.touch = true
-  config.event_waiting = false
-  config.hot_reload = "hackos.rb"
-  # config.log = true
+  config.event_waiting = true
+  # config.hot_reload = "hackos.rb"
 
   config.after_load do
     Hokusai.fonts.register "default", Hokusai::Backend::Font.from_ext("assets/boldy.ttf", 34 * 4, CHARSET)

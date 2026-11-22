@@ -5,6 +5,11 @@ class Hokusai::Blocks::Icon < Hokusai::Block
   EOF
 
   MAP = {
+    # media
+    play: "\u{F040A}",
+    pause: "\u{F03E4}",
+    skipnext: "\u{F04AD}",
+    skipprev: "\u{F04AE}",
     # general
     return: "\u{F0311}",
     symbol: "\u{F1501}",

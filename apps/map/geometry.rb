@@ -1,0 +1,5 @@
+require_relative "./geometry/bounds"
+require_relative "./geometry/point"
+require_relative "./geometry/transform"
+require_relative "./geometry/bounds_collection"
+require_relative "./geometry/tile_bounds"

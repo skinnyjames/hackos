@@ -258,7 +258,7 @@ module HackOS
 
     class Summary < Hokusai::Block
       template do
-        child(Hokusai::Blocks::Vblock) do
+        child(HackOS::Panel) do
           each_child(Latest, :sorted) do |item|
             prop :height do
               150.0
@@ -280,7 +280,7 @@ module HackOS
               item.value[1]
             end
 
-            on :tap do |event|
+            on :doubletap do |event|
               emit("set", item.value[0])
             end
           end
